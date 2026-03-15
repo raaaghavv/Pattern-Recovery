@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { generatePatterns, patternToString } from "../utils/patternGenerator";
 import PatternMini from "./PatternMini";
 
@@ -18,25 +18,47 @@ const CheckIcon = () => (
   </svg>
 );
 
-const InfoTip = ({ text }) => (
-  <svg
-    className="info-tip"
-    title={text}
-    width="14"
-    height="14"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <title>{text}</title>
-    <circle cx="12" cy="12" r="10" />
-    <line x1="12" y1="16" x2="12" y2="12" />
-    <line x1="12" y1="8" x2="12.01" y2="8" />
-  </svg>
-);
+function InfoTip({ text }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const close = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener("pointerdown", close);
+    return () => document.removeEventListener("pointerdown", close);
+  }, [open]);
+
+  return (
+    <span
+      className="info-tip-wrap"
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        setOpen((v) => !v);
+      }}
+    >
+      <svg
+        className="info-tip"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <circle cx="12" cy="12" r="10" />
+        <line x1="12" y1="16" x2="12" y2="12" />
+        <line x1="12" y1="8" x2="12.01" y2="8" />
+      </svg>
+      <span className={`info-tip-text ${open ? "visible" : ""}`}>{text}</span>
+    </span>
+  );
+}
 
 function NodeGrid({ selected, onToggle, label, tooltip }) {
   return (
@@ -283,14 +305,12 @@ export default function FilteredSearch({
                         <button
                           className="mark-tried-btn"
                           onClick={() => onMarkTried(code)}
-                          title="Mark as tried"
                         >
                           Mark tried
                         </button>
                         <button
                           className="found-it-btn"
                           onClick={() => onFoundIt?.()}
-                          title="This is my pattern!"
                         >
                           <CheckIcon />
                         </button>

@@ -38,7 +38,6 @@ export default function PatternList({ patterns = [], onRemove, onFoundIt }) {
             <button
               className="found-it-icon-btn"
               onClick={() => onFoundIt?.()}
-              title="This is my pattern!"
             >
               <CheckIcon />
             </button>
@@ -46,7 +45,6 @@ export default function PatternList({ patterns = [], onRemove, onFoundIt }) {
               <button
                 className="remove-btn"
                 onClick={() => onRemove(code)}
-                title="Remove from tried list"
               >
                 &times;
               </button>

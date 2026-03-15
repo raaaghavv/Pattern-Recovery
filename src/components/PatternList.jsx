@@ -25,29 +25,33 @@ export default function PatternList({ patterns = [], onRemove, onFoundIt }) {
     <div className="pattern-list">
       {patterns.map((code, index) => (
         <div key={code + "-" + index} className="pattern-list-item">
-          <div className="pattern-preview-wrap" onClick={() => onFoundIt?.()}>
-            <PatternMini
-              pattern={stringToPattern(code)}
-              size={50}
-              highlighted
-            />
-            <div className="pattern-success-overlay">
-              <CheckIcon />
-            </div>
-          </div>
+          <PatternMini
+            pattern={stringToPattern(code)}
+            size={50}
+            highlighted
+          />
           <div className="pattern-info">
             <span className="pattern-code">{code.split("").join("-")}</span>
             <span className="pattern-length">{code.length} nodes</span>
           </div>
-          {onRemove && (
+          <div className="pattern-actions">
             <button
-              className="remove-btn"
-              onClick={() => onRemove(code)}
-              title="Remove from tried list"
+              className="found-it-icon-btn"
+              onClick={() => onFoundIt?.()}
+              title="This is my pattern!"
             >
-              &times;
+              <CheckIcon />
             </button>
-          )}
+            {onRemove && (
+              <button
+                className="remove-btn"
+                onClick={() => onRemove(code)}
+                title="Remove from tried list"
+              >
+                &times;
+              </button>
+            )}
+          </div>
         </div>
       ))}
     </div>

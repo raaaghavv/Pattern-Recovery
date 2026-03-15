@@ -270,29 +270,31 @@ export default function FilteredSearch({
                   return (
                     <div key={code} className="result-card">
                       <div className="result-content">
-                        <div
-                          className="pattern-preview-wrap"
-                          onClick={() => onFoundIt?.()}
-                        >
-                          <PatternMini
-                            pattern={pattern}
-                            size={70}
-                            highlighted
-                          />
-                          <div className="pattern-success-overlay">
-                            <CheckIcon />
-                          </div>
-                        </div>
+                        <PatternMini
+                          pattern={pattern}
+                          size={70}
+                          highlighted
+                        />
                         <span className="result-code">
                           {code.split("").join("-")}
                         </span>
                       </div>
-                      <button
-                        className="mark-tried-btn"
-                        onClick={() => onMarkTried(code)}
-                      >
-                        Mark tried
-                      </button>
+                      <div className="result-actions">
+                        <button
+                          className="mark-tried-btn"
+                          onClick={() => onMarkTried(code)}
+                          title="Mark as tried"
+                        >
+                          Mark tried
+                        </button>
+                        <button
+                          className="found-it-btn"
+                          onClick={() => onFoundIt?.()}
+                          title="This is my pattern!"
+                        >
+                          <CheckIcon />
+                        </button>
+                      </div>
                     </div>
                   );
                 })}

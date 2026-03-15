@@ -74,7 +74,7 @@ function CelebrationOverlay({ onClose }) {
 
 function App() {
   const [triedPatterns, setTriedPatterns] = useState(() => loadTriedPatterns());
-  const [activeTab, setActiveTab] = useState("draw");
+  const [activeTab, setActiveTab] = useState("search");
   const [drawStatus, setDrawStatus] = useState("idle");
   const [statusMessage, setStatusMessage] = useState("");
   const [showCelebration, setShowCelebration] = useState(false);
@@ -151,6 +151,12 @@ function App() {
           >
             Search
           </button>
+          <button
+            className={`tab tried-tab ${activeTab === "tried" ? "active" : ""}`}
+            onClick={() => setActiveTab("tried")}
+          >
+            Tried ({triedPatterns.length})
+          </button>
         </nav>
       </header>
 
@@ -190,6 +196,27 @@ function App() {
                 onFoundIt={handleFoundIt}
               />
             </Suspense>
+          </div>
+          <div
+            className="tried-panel"
+            style={{ display: activeTab === "tried" ? undefined : "none" }}
+          >
+            <div className="sidebar-header">
+              <h2>Tried ({triedPatterns.length})</h2>
+              {triedPatterns.length > 0 && (
+                <button
+                  className="clear-all-btn"
+                  onClick={() => setTriedPatterns([])}
+                >
+                  Clear all
+                </button>
+              )}
+            </div>
+            <PatternList
+              patterns={triedPatterns}
+              onRemove={handleRemove}
+              onFoundIt={handleFoundIt}
+            />
           </div>
         </main>
 

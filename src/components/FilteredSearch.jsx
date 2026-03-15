@@ -37,6 +37,7 @@ function InfoTip({ text }) {
       ref={ref}
       onClick={(e) => {
         e.preventDefault();
+        e.stopPropagation();
         setOpen((v) => !v);
       }}
     >
@@ -174,7 +175,7 @@ export default function FilteredSearch({
           />
 
           <div className="length-controls">
-            <label>
+            <div className="length-field">
               <span>
                 Min length{" "}
                 <InfoTip text="Minimum number of nodes in the pattern (4-9)" />
@@ -184,14 +185,15 @@ export default function FilteredSearch({
                 min={4}
                 max={9}
                 value={minLength}
-                onChange={(e) => {
-                  const v = Math.max(4, Math.min(9, Number(e.target.value)));
+                onChange={(e) => setMinLength(e.target.value)}
+                onBlur={() => {
+                  const v = Math.max(4, Math.min(9, Number(minLength) || 4));
                   setMinLength(v);
                   if (v > maxLength) setMaxLength(v);
                 }}
               />
-            </label>
-            <label>
+            </div>
+            <div className="length-field">
               <span>
                 Max length{" "}
                 <InfoTip text="Maximum number of nodes in the pattern (4-9)" />
@@ -201,17 +203,18 @@ export default function FilteredSearch({
                 min={4}
                 max={9}
                 value={maxLength}
-                onChange={(e) => {
-                  const v = Math.max(4, Math.min(9, Number(e.target.value)));
+                onChange={(e) => setMaxLength(e.target.value)}
+                onBlur={() => {
+                  const v = Math.max(4, Math.min(9, Number(maxLength) || 9));
                   setMaxLength(v);
                   if (v < minLength) setMinLength(v);
                 }}
               />
-            </label>
+            </div>
           </div>
 
           <div className="toggle-group">
-            <label className="toggle-label">
+            <div className="toggle-label">
               <input
                 type="checkbox"
                 checked={adjacentOnly}
@@ -222,9 +225,9 @@ export default function FilteredSearch({
               <span className="toggle-hint">
                 No jumping over gaps (e.g. 3 can only reach 2, 5, 6)
               </span>
-            </label>
+            </div>
 
-            <label className="toggle-label">
+            <div className="toggle-label">
               <input
                 type="checkbox"
                 checked={allowVertical}
@@ -235,9 +238,9 @@ export default function FilteredSearch({
               <span className="toggle-hint">
                 Straight up/down moves (e.g. 1↔4↔7, 2↔5↔8)
               </span>
-            </label>
+            </div>
 
-            <label className="toggle-label">
+            <div className="toggle-label">
               <input
                 type="checkbox"
                 checked={allowHorizontal}
@@ -248,7 +251,7 @@ export default function FilteredSearch({
               <span className="toggle-hint">
                 Straight left/right moves (e.g. 1↔2↔3, 4↔5↔6)
               </span>
-            </label>
+            </div>
           </div>
         </div>
       )}

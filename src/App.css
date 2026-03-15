@@ -470,7 +470,12 @@
   flex-direction: column;
   gap: 8px;
 
-  label {
+  @media (max-width: 768px) {
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .length-field {
     font-size: 13px;
     font-weight: 500;
     color: var(--text-h);
@@ -504,13 +509,13 @@
   gap: 8px;
   font-size: 14px;
   color: var(--text-h);
-  cursor: pointer;
   flex-wrap: wrap;
 
   input[type="checkbox"] {
     accent-color: var(--accent);
     width: 16px;
     height: 16px;
+    cursor: pointer;
   }
 }
 

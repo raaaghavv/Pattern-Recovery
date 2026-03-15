@@ -1,5 +1,7 @@
 # Pattern Password Recovery
 
+**[Try it live](https://raaaghavv.github.io/Pattern-Recovery/)**
+
 ## Why I Built This
 
 I got locked out of my own Android phone. I knew my pattern lock was somewhere in muscle memory — my fingers could almost feel it — but I couldn't consciously remember the exact sequence. Android gives you limited attempts before locking you out entirely, so blindly guessing wasn't an option.
